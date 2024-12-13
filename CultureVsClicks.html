@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culture vs Clicks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #000435;
+        }
+        #story {
+            width: 80%;
+            height: 300px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background: #fff;
+            overflow-y: auto;
+            text-align: left;
+        }
+        #buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="story">Welcome to Culture vs Clicks! Click a button below to start.</div>
+    <div id="buttons">
+        <button onclick="startGame()">Start Game</button>
+    <audio id="audioPlayer"></audio>
+    </div>
+
+    <script>
+        const storyDiv = document.getElementById("story");
+        const buttonsDiv = document.getElementById("buttons");
+        const audioPlayer = document.getElementById("audioPlayer");
+
+
+
+        function playAudio(fileName) {
+
+            audioPlayer.src = fileName;
+            audioPlayer.play().catch((error) => {
+                console.error("Audio playback error:", error);
+            });
+
+        }
+        let timer;
+
+        function updateStory(text) {
+            storyDiv.innerText = text;
+        }
+
+        function clearButtons() {
+            buttonsDiv.innerHTML = "";
+        }
+
+        function addButton(text, callback) {
+            const button = document.createElement("button");
+            button.innerText = text;
+            button.onclick = callback;
+            buttonsDiv.appendChild(button);
+        }
+
+        function startTimer() {
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(() => {
+                updateStory("Time's up! The collar around your neck explodes, you die.");
+                clearButtons();
+                addButton("Restart Game", startGame);
+            }, 540000); // 9 minutes in milliseconds
+        }
+
+        function startGame() {
+            
+            updateStory(
+			   
+                "You find yourself stranded in a room. It feels like underground.\n" +
+                "A note is beside you...\nWhat do you do?\n1. Take the note.\n2. Ignore the note and look around."
+            );
+            clearButtons();
+            startTimer();
+            addButton("Take the Note", onePath);
+            addButton("Look Around", twoPath);
+        }
+
+        function onePath() {
+            playAudio("I agree.mp3")
+            
+            updateStory(
+                "You read the note.\n" +
+                 "You see a title 'Culture vs Clicks'\n" +
+                "(a)'Social media, with its arsenal of mass exposure, wrong audience, and consumerism, has dealt a fatal blow to arts and culture.'\n" +
+                "(b) 'Art for pleasure was criticized by Wallace and Tolstoy.'\n"+
+                "(c) 'Use the weapons wisely, In your hands a fate is set.'\n"+
+                "\nYou can see your daughter tied to a chair on a TV screen."+
+                "Your heart skips a beat."+
+                "You hear them speak..."+
+                "\nYou are here to help us create a supporting group for our created Dictator.As you choose certain answers, the doors will keep opening leading you to your daughter.Choosing certain doors will result in the death of your Daughter.Failing to open the door within 9 minutes will result in your death.We will open the first door as a gesture of goodwill. Just say 'I agree'."+
+                
+                "What do you do next?\n" +
+                "1. Say 'I agree'.\n2. Say nothing.\n3. Ask to repeat the conditions again."
+            );
+            clearButtons();
+            startTimer();
+         
+            addButton("Say 'I agree'", theTrap);
+            addButton("Say Nothing", () => {
+                playAudio("clock ticking.mp3");
+                addButton("Restart Game", startGame);
+            });
+            addButton("Repeat Conditions", () => {
+                 playAudio("I agree.mp3");
+            });
+            addButton("Repeat Notes", () => {
+                 playAudio("first_notes.mp3");
+            });
+        }
+
+        function twoPath() {
+		    playAudio("first.mp3")
+			playAudio("first_notes(1).mp3")
+            updateStory(
+                "You hear a voice advising you to look at the note.\n" +
+                "What do you do?\n1. Look at the note.\n2. Refuse."
+            );
+            clearButtons();
+            startTimer();
+            addButton("Look at the Note", onePath);
+            addButton("Refuse", () => {
+                
+                addButton("Restart Game", startGame);
+				playAudio("clock ticking.mp3");
+            });
+        }
+
+        function theTrap() {
+		    playAudio("Trap1.mp3")
+            updateStory(
+                "The door opens. You enter the next room.\n" +
+                "You hear the voice again: 'How should you use the weapons if you were to be social media?'\n" +
+                "What will you choose?\n" +
+                "1. Luxury Brands\n2. Personalized Sentient with Algorithm\n3. Broadcasting\n4. Say Nothing"
+            );
+            clearButtons();
+            startTimer();
+            addButton("Luxury Brands", () => {
+                
+				playAudio("Luxury Brands.mp3");
+            });
+            addButton("Personalized Sentient with Algorithm", () => {
+                updateStory("The next door opens.");
+                theTrap2();
+            });
+            addButton("Broadcasting", () => {
+                
+				playAudio("Broadcasting.mp3");
+            });
+            addButton("Say Nothing", () => {
+                
+                addButton("Restart Game", startGame);
+				playAudio("clock ticking.mp3");
+            });
+        }
+
+        function theTrap2() {
+		    playAudio("Trap2.mp3")
+            updateStory(
+                "Your choice is brilliant. With Personalized Algorithm, our chosen supreme leader can use the full extent of his arsenal.\n" +
+                "Now it is time to decide how the trap will function.\n" +
+				"You can have the other part of Culture vs. Clicks.I would like to higlight some qoutes from 'Algorithm: The trap'"+
+                "\n"+
+                "\nBy Farago, Many of us now consume culture in algorithmically determined doses, optimized for engagement rather than depth"+
+				"\n"+
+				"\n"+
+   
+                "What will you choose?\n" +
+                "1. Make a motto of worshiping the supreme leader.\n" +
+                "2. Force every person to like the supreme leader, even if it kills them.\n" +
+                "3. Show the supreme leader as each individual wants him to be."
+            );
+            clearButtons();
+            startTimer();
+            addButton("Make a Motto", () => {
+                updateStory("Worshiping won't work. You will create conflict among people of strong religious faith.");
+            });
+            addButton("Force People", () => {
+                updateStory("Force has been used throughout history, but it didn't prevail. Choose something better.");
+            });
+            addButton("Show as Desired", () => {
+            playAudio("m2.mp3");
+			target()
+			});
+        }
+
+        function target() {
+		    playAudio("target.mp3")
+            updateStory(
+                "With each door, you get a little closer to your daughter.\n" +
+				"\n"+
+				"Again According to Farago, algorithm, in its quest for personalization, kills diversity and creativity. So you did a pretty good job, they can't think for themselves now as they will fail to be creative. Now you have to choose a single demographic. As much as we want all the demographic, the more assuring way is get the support of a whole generation. It will help us secure the oncoming generation.\n" +
+                "\nWho will you choose?\n" +
+                "1. Teens and Pre-teens.\n" +
+                "2. Parents of Teens.\n" +
+                "3. Senior Citizens."
+            );
+            clearButtons();
+            startTimer();
+            addButton("Teens and Pre-teens", propaganda);
+            addButton("Parents of Teens", () => {
+                playAudio("parents.mp3");
+            });
+            addButton("Senior Citizens", () => {
+                playAudio("old_people.mp3");
+            });
+        }
+
+        function propaganda() {
+		    playAudio("propaganda.mp3")
+            updateStory(
+			    "Good Choice"+
+                "You are on the right path.\n" +
+                "\nAccording Giedd Journal of Adolescent Health 2008, Teens' still maturing prefrontal cortex of the brain that contribute in emotional volatility. So they are biological more curious to engage in something new. In this room you have to create the full propaganda before moving on. We don't want them to turn against us. You should follow the quotes. According to Baldin,Bille,Mukkamala,and Vatrapu, Social media are endowed with desirable features that may reduce uncertainly by the 'nobody knows' property.\n" +
+                "\nWhat will you do to keep them engaged?\n" +
+                "1. Create something useful.\n" +
+                "2. The kids don't need anything.\n" +
+                "3. Send them to a labor camp."
+            );
+            clearButtons();
+            startTimer();
+            addButton("Create Something Useful", propaganda2);
+            addButton("The Kids Don't Need Anything", () => {
+                playAudio("teens_nothing.mp3");
+            });
+            addButton("Send to Labor Camp", () => {
+                playAudio("labor.mp3");
+            });
+        }
+
+        function propaganda2() {
+		    playAudio("propaganda2.mp3");
+            updateStory(
+                "For the next phase, remember the quote," +
+                "Social media allow users to share information about feelings, emotional moods, and opinions regarding whatever experience. By Baldin,Bille,Mukkamala,and Vatrapu." +
+                "\nWhat will you choose?\n" +
+				"\n"+
+                "1. Create a school teaching songs and stories of the leader.\n" +
+                "2. Create a food bank giving teens free food.\n" +
+                "3. Create an institution for sharing feelings and emotions."
+            );
+            clearButtons();
+            startTimer();
+            addButton("School of Songs", () => {
+                playAudio("notbabies.mp3");
+            });
+            addButton("Food Bank", () => {
+                playAudio("teens_nothing.mp3");
+            });
+            addButton("Institution", () => {
+			    
+                
+                propaganda3();
+            });
+        }
+        function propaganda3() {
+		    playAudio("propaganda3.mp3");
+			updateStory(
+			"Good choice.\n" +
+            "Levin from The New York Times can vouch for us,\n" +
+            "Young people are acutely aware that Instagram can be bad for their mental health yet are compelled to spend time on the app for fear of missing out on cultural and social trends.\n" +
+            "For the last phase of propaganda we need to keep them engazed. Maybe it's better to put someone else in regulation of the institution." +
+            "\n" +
+			"\nFollow the words of Al-Ansi; Aseel; Jebril; Adwan from Heylion-" +
+			"\nSMIs have gained a significant portion of media today, replacing traditional media and increasingly interacting in the worlds of education, economy, and entertainment.\n" +
+            "\nWhom are you gonna choose?" +
+			"\n1. Their parents." +
+            "\n2. People who want to be famous." +
+            "\n3. Let them run themselves."
+            );
+            clearButtons();
+            startTimer();
+            addButton("Their parents.", () => {
+			    playAudio("notbabies.mp3");
+				
+			});
+			addButton("People who want to be famous." , () => {
+			    
+			    
+				middle1()
+            });
+            addButton("Let them run themselves.", () => {
+			    playAudio("teens_nothing.mp3");
+				
+            
+            });			
+			    
+			
+			
+            
+        }	
+        function middle1() {
+		    playAudio("haventeens.mp3")
+            updateStory("\nPerfect. You followed O'Grady from New York Times," +
+                "\nStudies show that 41% of social media users feel pressure to post content that will get likes." +
+                "\nThe proprietors will also be in the trap of getting famous." +
+                "\nWe have created the perfect haven for teens.\n"
+			);
+			clearButtons();
+			addButton("Continue", () => {
+			    massExposure()
+			});
+		}
+			
+			
+        function massExposure() {
+		   
+		    playAudio("massexposure.mp3")
+		    
+			
+			
+            updateStory(
+                "You are almost done. Very close to your daughter." +
+                "\nNow we need to use the weapon we created to stop the progression. Hence we will stay in power.\n" +
+                "\nA word from, Farago may help, We are drowning in content, we are consuming more of the same(through social media)." +
+
+                "What will you choose?\n" +
+                "1. Inside the institution, give them what they want to see and hear.\n" +
+                "2. Give them the illusion that they have power.\n" +
+                "3. Feed them propaganda trends(in benefit of the supreme leader)."
+            );
+            clearButtons();
+            startTimer();
+            addButton("Give What They Want", () => {
+                consumerismid1()
+            });
+            addButton("Illusion of Power", () => {
+                hopem()
+                
+            });
+            addButton("Propaganda Trends", () => {
+                consumerismid1()
+                
+            });
+        }
+        function hopem() { 
+		    playAudio("m3.mp3")
+		    updateStory(
+		        "Wow, I didn't expect you to be this good. Bravo."
+		    );
+		    clearButtons();
+		    addButton("Continue", () => {
+		        hope()
+		    });
+		
+		}
+		function consumerismid1() {
+		    playAudio("consume1.mp3")
+			updateStory("Not Bad!!!")
+			clearButtons();
+			addButton("Continue", () => {
+			    scream()
+			});
+		}	
+        function scream() {
+		    playAudio("scream.mp3")
+			updateStory(
+			    "\nYou hear a scream\n"
+			)
+			clearButtons();
+			addButton("Continue", () => {
+			    consumerism1()
+		    });
+		     
+		
+		}
+		function consumerism1() {
+		    playAudio("consumer2.mp3")
+			updateStory(
+			    "Don't worry, this is the last door before you see her.\n" +
+				"You know the drill.\n" +
+				"\n" +
+				"Zhua, Lin; Anagondahalli, Deepa;  Zhang, Ai says,\n" +
+				"The relentless optimization for ‘likes’ and ‘shares’ on platforms like Instagram and TikTok results in an echo chamber where the most viral, not the most original, content thrives.\n" +
+				"\nSo what will be your finishing?\n" +
+				"\n1. Give them the illusion of control." +
+				"\n2. Create the bandwagon effect.(big crowds tend to get bigger regardless of their actions)" +
+				"\n3. Leave them be."
+			);
+			clearButtons();
+			startTimer();
+			addButton("Illusion of Control", () => {
+			    hope()
+			});
+			addButton("Create the bandwagon effect.", () => {
+			    hope()
+			});
+			addButton("Leave them be", () => {
+			    playAudio("teens_nothing.mp3")
+			});
+		}
+				
+				
+        function hope() {
+		    updateStory(
+			    "It's done.\n" +
+				"You have successfully created a mass who will be the puppets of our supreme leader.\n" +
+				"\nYou enter the next room and see your daughter, barely alive\n" +
+				"\n1. Scream 'YOU LIED!!!!!'" +
+				"\n2. Say I already knew but I did it anyway" 
+            );
+            clearButtons();
+            startTimer();
+            addButton("YOU LIED!!!!!", () => {
+                end1()
+            });
+            addButton("I knew it.", () => {
+			    end2()
+            });			
+		}  
+		function end1() {
+		    playAudio("end1.mp3")
+			updateStory(
+				"I didn't lie.\n" +
+				"\nShe was collateral damage just like 'Arts' in 'Culture vs. Clicks'" +
+				"\nAs you were social media, she was culture, the very thing you were fighting for." +
+				"\nI said certain doors will kill her and you chose those." +
+				"\nYou kept choosing doors that would free you, but kill her\n"
+            );
+			clearButtons();
+			startTimer();
+			addButton("Continue", () => {
+			    ending()
+			});
+		}
+		
+		function end2() {
+		    playAudio("end2.mp3")
+			updateStory(
+			    "Yes, she was collateral damage just like 'Arts' in 'Culture vs. Clicks'\n" +
+				"\nAs you were social media, she was culture, the very thing you were fighting for.\n" +
+				"\nI said certain doors will kill her and you chose those."
+            );
+			clearButtons();
+			startTimer();
+			addButton("Continue", () => {
+			    ending()
+			});
+        }
+		
+		function ending() {
+		    playAudio("ending.mp3")
+			updateStory(
+			    "Your daughter is still alive, but barely." +
+				"The whole place is falling apart both of you are gonna get buried under." +
+				"\n" +
+				"\n" +
+				"The voice speaks again," +
+				"\nI can save only one of you." +
+				"\nWho do you choose?" +
+				"\n" +
+				"\n1. Choose yourself" +
+				"\n2. Choose your daughter."
+			);
+			clearButtons();
+			startTimer();
+			addButton("Choose yourself", () => {
+			    yourself()
+			});
+			addButton("Choose your daughter.", () => {
+			    daughter()
+			});
+		}
+		function yourself() {
+		    updateStory(
+			    "Well, you don't want to help in the resurrection of arts and culture." +
+				"\n" +
+				"\nMaybe all hope is lost."
+			);
+			clearButtons();
+			startTimer();
+            addButton("You Survive", () => {
+		        endGame()
+			});
+		}
+        function daughter() {
+		    updateStory(
+			    "They come and take your daughter.\n" +
+				"\nA block of concrete falls on top of you.\n" +
+				"\nYou could only see them taking her\n" +
+				"There is no way of knowing that she will survive.\n" +
+				"But at least there is hope..\n" +
+				"Both for culture and your daughter\n"
+		    )
+			addButton("You Die", () => {
+			    endGame()
+			});
+		}
+			       
+		   
+
+
+        function endGame() {
+            updateStory(
+			    "Thanks for playing my game.\n" +
+				"If you are interested you can read my paper from the link below\n" +
+				"(copy and paste on web browser)\n" +
+				"\nhttps://docs.google.com/document/d/1mtq8JUiMYASfOVyUMLi-5EKvdky4s6b_/edit?usp=sharing&ouid=101987786680346186241&rtpof=true&sd=true"
+				
+				 
+                
+				
+               
+            );
+            clearButtons();
+            addButton("Restart Game", startGame);
+        }
+    </script>
+</body>
+</html>
